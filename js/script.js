@@ -2,7 +2,7 @@ const app = new Vue({
    el: '#app',
 
    data: {
-      isLoading: true,
+      isLoading: false,
       httpError: false,
       mails: [],
       MAIL_QUANTITY: 10
@@ -18,27 +18,8 @@ const app = new Vue({
    methods: {
       getMails() {
          
-         this.isLoading = true;
+         this.getFromApi();
 
-         axios.get('https://flynn.boolean.careers/exercises/api/random/mail')
-         .then((response) => {
-            
-            const data = response.data;
-            
-            this.mails.push(data.response);
-            if (this.mails.length === this.MAIL_QUANTITY) {
-               this.isLoading = false;
-               console.log('loading', this.isLoading);
-            }
-            if (!this.httpError && this.isLoading) {
-               this.getFromApi();
-            }
-            
-         })
-         .catch((error) => {
-            console.log('errore http', error);
-            this.httpError = true;
-         });
    
          // axios
          // -> se vuoi continuare richami axios
@@ -47,8 +28,10 @@ const app = new Vue({
       },
       
       getFromApi() {
+
+         this.isLoading = true;
          
-         axios.get('https://flynn.boolean.careers/exercises/api/random/mail')
+         axios.get('htps://flynn.boolean.careers/exercises/api/random/mail')
          .then((response) => {
             
             const data = response.data;
