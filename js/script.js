@@ -5,7 +5,7 @@ const app = new Vue({
       isLoading: true,
       httpError: false,
       mails: [],
-      MAIL_QUANTITY: 3
+      MAIL_QUANTITY: 10
 
    },
 
@@ -22,25 +22,37 @@ const app = new Vue({
 
          for (let i = 0; i < this.MAIL_QUANTITY; i++) {
          
-            axios.get('https://flynn.boolean.careers/exercises/api/random/mail')
-               .then((response) => {
-               
-                  const data = response.data;
-   
-                  this.mails.push(data.response);
-
-                  // stampo mail solo se ho raccolto 'MAIL_QUANTITY' MAIL
-                  if (this.mails.length === this.MAIL_QUANTITY) this.isLoading = false;
-               })
-               .catch((error) => {
-                  console.log('errore http', error);
-                  //stop ciclo se error http
-                  i = this.MAIL_QUANTITY;
-                  console.log(i);
-                  this.httpError = true;
-               });
+            // stampo mail solo se ho raccolto 'MAIL_QUANTITY' MAIL
+            if (!this.httpError) {
+               this.getFromApi();
+            } 
          }
          
+      },
+      
+      getFromApi() {
+         
+         axios.get('https://flynn.boolean.careers/exercises/api/random/mal')
+         .then((response) => {
+            
+            const data = response.data;
+            
+            this.mails.push(data.response);
+            if (this.mails.length === this.MAIL_QUANTITY) {
+               this.isLoading = false;
+               console.log('loading', this.isLoading);
+            }
+   
+         })
+         .catch((error) => {
+            console.log('errore http', error);
+            this.httpError = true;
+         });
+   
+         // axios
+         // -> se vuoi continuare richami axios
+         //    -> se vuo continarue richiami axios
       }
    }
+
 });
