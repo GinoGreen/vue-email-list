@@ -10,7 +10,8 @@
 <body>
 
    <div id="app" class="d-flex justify-content-center m-3">
-
+      
+      <!-- stampo lista se il loading é finito e se non ci sono errori http -->
       <ol 
          class="list-group text-center"
          v-if="!httpError && !isLoading"
@@ -18,12 +19,13 @@
          <li 
             class="list-group-item" 
             v-for="mail in mails"
-            v-if="!isLoading"
          >
             {{ mail }}
          </li>
       </ol>
+      <!-- mostro il caricamento se non ci sono errori -->
       <h1 v-else-if="!httpError">Caricamento Mail...</h1>
+      <!-- mostro errori se ci sono errori -->
       <h1 v-else>ERRORE!</h1>
 
    </div>

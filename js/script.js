@@ -19,40 +19,35 @@ const app = new Vue({
       getMails() {
          
          this.getFromApi();
-
-   
-         // axios
-         // -> se vuoi continuare richami axios
-         //    -> se vuo continarue richiami axios
          
       },
       
       getFromApi() {
-
+         
+         //inizio il loading
          this.isLoading = true;
          
-         axios.get('htps://flynn.boolean.careers/exercises/api/random/mail')
+         axios.get('https://flynn.boolean.careers/exercises/api/random/mail')
          .then((response) => {
             
             const data = response.data;
             
             this.mails.push(data.response);
-            if (this.mails.length === this.MAIL_QUANTITY) {
-               this.isLoading = false;
-               console.log('loading', this.isLoading);
-            }
-            if (!this.httpError && this.isLoading) {
-               this.getMails();
-            } 
+
+            //stop loading se array é pieno
+            if (this.mails.length === this.MAIL_QUANTITY) this.isLoading = false;
+               // console.log('loading', this.isLoading);
+
+            // richiamo se stesso finché se non ci sono errori e il loading é ancora in corso
+            if (!this.httpError && this.isLoading) this.getMails();
+
          })
          .catch((error) => {
             console.log('errore http', error);
+            //errore
             this.httpError = true;
          });
    
-         // axios
-         // -> se vuoi continuare richami axios
-         //    -> se vuo continarue richiami axios
       }
    }
 
